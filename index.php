@@ -5,10 +5,10 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require 'vendor/autoload.php';
 
 $app = new \Slim\App;
-$app->get('/helo', function() {
+require 'routes/hello.php';
+require 'routes/user.php';
 
-    echo 'ว่าไง';
-});
+
 $app->get('/dog/new-dog', function(){
 
 
@@ -28,10 +28,7 @@ $app->get('/dog/view-dog', function(){
                 
                 
 });
-$app->get('/user/login', function(){
-    
-    
-});
+
 $app->get('/user/register', function(){
     echo 'regis';
     
