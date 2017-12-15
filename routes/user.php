@@ -19,12 +19,82 @@ $app->post('/user/login',function(Request $request,Response $response){
 
 $app->post('/user/register', function(Request $request,Response $response){
     $data =$request->getParsedBody();
-    echo 'บันทึกข้อมูลเรียบร้อยแล้ว '.json_encode($data);
+    
+    $FistName = $data['FirstName'];
+    $LastName = $data['LastName'];
+    $Address = $data['Address'];
+    $Username = $data['Username'];
+    $Password = $data['Password'];
+    $Email = $data['Email'];
+    $Telephone = $data['Telephone'];
+
+    $db=$this->db;
+    $statement=$db->prepare("INSERT INTO User(FistName, LastName, Address, Username, Password, Email, Telephone) VALUES (:FistName,:LastName,:Address,:Username,:Password,:Email,:Telephone)");
+    $statement->execute(array(':FistName'=>$FistName,':LastName'=>$LastName,':Address'=>$Address,':Username'=>$Username,':Password'=>$Password,':Email'=>$Email,':Telephone'=>$Telephone));//ส่งค่าไปวางที่ คอลั่ม name 
+    //เช็็คว่าเข้ามั้ย 
+if($statement->rowCount()>0){
+    $result = (object) array(
+"messege" => "Insert Success",
+"insert_status" => 1
+    );
+echo json_encode($result);
+}else{
+
+    $result = (object) array(
+        "messege" => "Insert Error",
+        "insert_status" => 0
+            );
+            echo json_encode($result);
+}
+
+   // echo json_encode($data);
+
+ // echo "/rooms/ new post".$roomName;
+
+    
+    echo 'บันทึกข้อมูลเรียบร้อยแล้ว ';
     
 });
+
+
+
 $app->post('/user/edit', function(Request $request,Response $response){
     $data =$request->getParsedBody();
-    echo 'บันทึกข้อมูลเรียบร้อยแล้ว '.json_encode($data);
+    $UserID= $data['UserID'];
+    $FistName = $data['FirstName'];
+    $LastName = $data['LastName'];
+    $Address = $data['Address'];
+    $Username = $data['Username'];
+    $Password = $data['Password'];
+    $Email = $data['Email'];
+    $Telephone = $data['Telephone'];
+
+    $db=$this->db;
+    $statement=$db->prepare("UPDATE User SET FistName=:FistName, LastName=:LastName, Address=:Address, Username=:Username, Password=:Password, Email=:Email, Telephone=:Telephone WHERE UserID = :UserID");
+    $statement->execute(array(':UserID'=>$UserID,':FistName'=>$FistName,':LastName'=>$LastName,':Address'=>$Address,':Username'=>$Username,':Password'=>$Password,':Email'=>$Email,':Telephone'=>$Telephone));//ส่งค่าไปวางที่ คอลั่ม name 
+    $affected_rows = $statement->rowCount();
+    //เช็็คว่าเข้ามั้ย 
+if($statement->rowCount()>0){
+    $result = (object) array(
+"messege" => "Insert Success",
+"insert_status" => 1
+    );
+echo json_encode($result);
+}else{
+
+    $result = (object) array(
+        "messege" => "Insert Error",
+        "insert_status" => 0
+            );
+            echo json_encode($result);
+}
+
+   // echo json_encode($data);
+
+ // echo "/rooms/ new post".$roomName;
+
+    
+    echo 'แก้ไขข้อมูลเรียบร้อยแล้ว ';
     
 });
 
