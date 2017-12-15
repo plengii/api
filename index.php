@@ -3,6 +3,9 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 require 'vendor/autoload.php';
+require 'setting.php';
+
+$app = new \Slim\App(["settings" => $config]);
 
 $app = new \Slim\App;
 require 'routes/hello.php';
